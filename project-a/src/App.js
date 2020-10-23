@@ -1,23 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
+import AiringShowsList from './AiringShowsList.js'
+
+const _ = require('lodash')
+const Jikan = require('jikan-node')
+const mal = new Jikan()
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <body>
+        <AiringShowsList />
+      </body>
     </div>
   );
 }
