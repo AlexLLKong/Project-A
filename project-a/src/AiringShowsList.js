@@ -1,62 +1,46 @@
-import React, {Component} from 'react'
-import ShowCard from './ShowCard'
-const _ = require('lodash')
-const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
-class AiringShowsList extends Component{
-    constructor(){
-        super()
-        this.state = {
-            loading: true,
-            jikanResponse: {}
-        }
-    }
-
-    componentDidMount(){
-        this.setState({loading: true})
-        fetch('https://api.jikan.moe/v3/schedule')
-            .then(response => response.json())
-            .then(data => {
-                this.setState({
-                    loading: false,
-                    jikanResponse: _.cloneDeep(data)
-                })
-            })
-    }
-    checkJikanCall (){
-        if(this.state.loading)
-            return 'loading...'
-        else{
-            let objArr = [];
-            console.log(this.state.jikanResponse)
-            for(let i = 0; i < days.length; i++){
-                let a = this.state.jikanResponse[days[i]]
-                for(let j = 0; j < a.length; j++){
-                    objArr.push(a[j])
-                }
-            }
-            objArr = _.sortBy(objArr, 'title')
-            const returnArr = objArr.map(x => {
-                return <ShowCard 
-                            key = {x.mal_id}
-                            value = {x}
-                        />
-            })
-        return returnArr;
-        }
-    }
-    render(){
-        let list = this.checkJikanCall();
+import React from 'react'
+import ShowCard from './ShowCards/ShowCard'
+import UserListCard from './ShowCards/UserListCard'
+function createAiringShowCards(props){
+    const returnArr = props.value.data.map(x => {
+        return <ShowCard 
+                    key = {x.mal_id}
+                    value = {x}
+                    handlers = {props.value.handlers}
+                />
+    })
+return returnArr;
+}
+function createUserListShowCards(props){
+    const returnArr = props.value.data.map(x => {
+        return <UserListCard 
+                    key = {x.mal_id}
+                    value = {x}
+                    handlers = {props.value.handlers}
+                />
+    })
+return returnArr;
+}
+function AiringShowsList(props){
+    
+        // let list = this.state.title === 'Airing Shows' ? 
+        //     this.createAiringShowCards() : this.createUserListShowCards()
+        
+        // console.log(this.state.data)
         return (
             <div className= 'album container'>
                 <div className = 'col-12'>
-                    <h1 className = 'section-title'>Airing Shows</h1>
+                    <h1 className = 'section-title'>{props.value.title}</h1>
                 </div>
                 <div className = 'row justify-content-around'>
-                    {list}
+                    {
+                        props.value.title === 'Airing Shows' ? 
+                        createAiringShowCards(props) 
+                        : createUserListShowCards(props)
+                    }
                 </div>
             </div>
-        )
-    }
+        )    
+    
 }
-
 export default AiringShowsList
