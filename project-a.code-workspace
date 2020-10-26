@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "project-a"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"eslint.format.enable": true,
+		"eslint.lintTask.enable": true,
+		"eslint.options": {
+			"fix": true
+		}
+	}
+}

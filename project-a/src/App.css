@@ -5,3 +5,8 @@
 .section-title{
   text-align: center;
 }
+
+.timer-text{
+  text-align: center;
+  font-size: 0.8rem;
+}
